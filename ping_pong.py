@@ -6,9 +6,8 @@ window = display.set_mode((win_width, win_height))
 display.set_caption("ping_pong")
 
 class GameSprite(sprite.Sprite):
-    def __init__(self, player_image, player_x, player_y, width, height, player_speed):
+    def __init__(self, player_x, player_y, width, height, player_speed):
         super().__init__()
-        self.image = transform.scale(image.load(player_image),(width,height))
         self.speed = player_speed
         self.rect = self.image.get_rect()
         self.rect.x = player_x
@@ -18,6 +17,21 @@ class GameSprite(sprite.Sprite):
 
     def reset(self):
         window.blit(self.image, (self.rect.x, self.rect.y))
+class Racket1(GameSprite):
+    def update(self):
+        keys_pressed = key.get_pressed()
+        if keys_pressed[K_w] and self.rect.y > 5:
+            self.rect.y -= self.speed
+        if keys_pressed[K_s] and self.rect.y < 445:
+            self.rect.y += self.speed
+class Racket2(GameSprite):
+    def update(self):
+        keys_pressed = key.get_pressed()
+        if keys_pressed[K_UP] and self.rect.y > 5:
+            self.rect.y -= self.speed
+        if keys_pressed[K_DOWN] and self.rect.y < 445:
+            self.rect.y += self.speed
+
 
 class Wall(sprite.Sprite):
     def  __init__(self, color_1, color_2, color_3, wall_width, wall_height, wall_x, wall_y):
